@@ -4,215 +4,350 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mooncore</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
-        }
 
+    <style>
         :root {
             --main-blue: #a0d1eb;
             --dark-bg: #0a0a0a;
+            --text-muted: #adb5bd;
         }
 
         body {
             background-color: var(--dark-bg);
             color: white;
-            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        .header {
-            position: fixed;
-            top: 0;
+        /* 3D Background Effect */
+        .hero-bg {
+            position: absolute;
             width: 100%;
-            padding: 1.5rem 5%;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
+            height: 100%;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            overflow: hidden;
         }
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .cube {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-style: preserve-3d;
+            animation: cubeRotate 20s infinite linear;
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 2px solid var(--main-blue);
+            background: rgba(160, 209, 235, 0.1);
+            transform-style: preserve-3d;
+        }
+
+        @keyframes cubeRotate {
+            0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+        }
+
+        /* Навигация */
+        .navbar {
+            background: rgba(10, 10, 10, 0.95) !important;
+            backdrop-filter: blur(10px);
         }
 
         .logo {
             font-size: 1.8rem;
             font-weight: 700;
-            color: white;
-            text-decoration: none;
             position: relative;
+            padding-bottom: 5px;
         }
 
         .logo::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             left: 0;
             width: 40%;
             height: 2px;
             background: var(--main-blue);
         }
 
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin-left: 2rem;
-            transition: color 0.3s ease;
+        .nav-link {
+            color: white !important;
+            transition: all 0.3s ease;
         }
 
-        .nav-links a:hover {
-            color: var(--main-blue);
+        .nav-link:hover {
+            color: var(--main-blue) !important;
         }
 
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: linear-gradient(45deg, #0a0a0a 0%, #1a1a2e 100%);
-            padding: 0 5%;
+        /* Герой секция */
+        .hero-section {
+            min-height: 100vh;
+            position: relative;
         }
 
-        .hero-content {
-            max-width: 800px;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-
-        .features {
-            padding: 5rem 5%;
-            background: #111;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
+        /* Возможности */
         .feature-card {
-            padding: 2rem;
             background: #1a1a1a;
-            border-radius: 15px;
             border: 1px solid #333;
+            transition: transform 0.3s ease;
         }
 
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--main-blue);
-            margin-bottom: 1rem;
+        .feature-card:hover {
+            transform: translateY(-10px);
         }
 
-        .about {
-            padding: 5rem 5%;
-            background: #0a0a0a;
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
+        /* Команда */
         .team-card {
             background: #1a1a1a;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
             border: 1px solid #333;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, var(--main-blue), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+            opacity: 0;
+        }
+
+        .team-card:hover::before {
+            opacity: 0.1;
+            top: -20%;
+            left: -20%;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(160, 209, 235, 0.1);
         }
 
         .team-icon {
-            font-size: 3rem;
-            color: var(--main-blue);
-            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
         }
 
-        footer {
-            background: #0a0a0a;
-            color: white;
-            padding: 3rem 5%;
-            text-align: center;
-            border-top: 1px solid #333;
+        .team-card:hover .team-icon {
+            transform: rotate(360deg) scale(1.2);
         }
 
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
+        /* Горизонтальная временная шкала */
+        .horizontal-timeline {
+            display: flex;
+            overflow-x: auto;
+            padding: 2rem 0;
+            scroll-snap-type: x mandatory;
+            gap: 2rem;
+        }
+
+        .timeline-item-horizontal {
+            flex: 0 0 300px;
+            scroll-snap-align: start;
+            padding: 2rem;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+
+        .timeline-item-horizontal:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Кастомный скроллбар */
+        ::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--main-blue);
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <nav>
-            <a href="#" class="logo">MOONCORE</a>
-            <div class="nav-links">
-                <a href="#features">Возможности</a>
-                <a href="#about">Команда</a>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg fixed-top py-3">
+        <div class="container">
+            <a class="navbar-brand logo text-white" href="#">MOONCORE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon text-white"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Возможности</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">Команда</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#timeline">История</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Темная сторона инноваций</h1>
-            <p>Погрузитесь в цифровую вселенную возможностей</p>
+    <!-- Герой секция с 3D эффектом -->
+    <section class="hero-section d-flex align-items-center">
+        <div class="hero-bg">
+            <div class="cube">
+                <div class="cube-face" style="transform: rotateY(0deg) translateZ(100px)"></div>
+                <div class="cube-face" style="transform: rotateY(90deg) translateZ(100px)"></div>
+                <div class="cube-face" style="transform: rotateY(180deg) translateZ(100px)"></div>
+                <div class="cube-face" style="transform: rotateY(270deg) translateZ(100px)"></div>
+                <div class="cube-face" style="transform: rotateX(90deg) translateZ(100px)"></div>
+                <div class="cube-face" style="transform: rotateX(-90deg) translateZ(100px)"></div>
+            </div>
+        </div>
+        <div class="container text-center position-relative" data-aos="zoom-in">
+            <h1 class="display-1 fw-bold mb-4">Темная сторона инноваций</h1>
+            <p class="lead">Погрузитесь в цифровую вселенную возможностей</p>
         </div>
     </section>
 
-    <section class="features" id="features">
-        <div class="features-grid">
-            <div class="feature-card">
-                <i class="bi bi-cpu feature-icon"></i>
-                <h3>Инновации</h3>
-            </div>
-            <div class="feature-card">
-                <i class="bi bi-shield-check feature-icon"></i>
-                <h3>Безопасность</h3>
-            </div>
-            <div class="feature-card">
-                <i class="bi bi-palette feature-icon"></i>
-                <h3>Дизайн</h3>
-            </div>
-        </div>
-    </section>
-
-    <section class="about" id="about">
-        <div class="about-grid">
-            <div class="team-card">
-                <i class="bi bi-stars team-icon"></i>
-                <h3>fazzyt</h3>
-                <p>Разработчик & Идейный вдохновитель</p>
-            </div>
-            <div class="team-card">
-                <i class="bi bi-gear team-icon"></i>
-                <h3>NullPointerExceptionOwO</h3>
-                <p>Технический администратор</p>
+    <!-- Возможности -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Наши возможности</h2>
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card rounded-3 p-4 text-center">
+                        <i class="bi bi-cpu fs-1 mb-3" style="color: var(--main-blue);"></i>
+                        <h3>Инновации</h3>
+                        <p style="color: var(--text-muted);">Передовые технологии для вашего успеха</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card rounded-3 p-4 text-center">
+                        <i class="bi bi-shield-check fs-1 mb-3" style="color: var(--main-blue);"></i>
+                        <h3>Безопасность</h3>
+                        <p style="color: var(--text-muted);">Надежная защита ваших данных</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card rounded-3 p-4 text-center">
+                        <i class="bi bi-palette fs-1 mb-3" style="color: var(--main-blue);"></i>
+                        <h3>Дизайн</h3>
+                        <p style="color: var(--text-muted);">Современный и интуитивный интерфейс</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <footer>
-        <p>© 2024 Mooncore</p>
+    <!-- Команда -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Наша команда</h2>
+            <div class="row g-4">
+                <div class="col-md-6" data-aos="flip-left">
+                    <div class="team-card rounded-3 p-4 text-center">
+                        <div class="position-relative">
+                            <i class="bi bi-stars team-icon fs-1 mb-3" style="color: var(--main-blue);"></i>
+                        </div>
+                        <h3>fazzyt</h3>
+                        <p style="color: var(--text-muted);">Разработчик & Идейный вдохновитель</p>
+                        <div class="social-links mt-3">
+                            <a href="#" class="text-white me-2"><i class="bi bi-github"></i></a>
+                            <a href="#" class="text-white me-2"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" data-aos="flip-right">
+                    <div class="team-card rounded-3 p-4 text-center">
+                        <div class="position-relative">
+                            <i class="bi bi-gear team-icon fs-1 mb-3" style="color: var(--main-blue);"></i>
+                        </div>
+                        <h3>NullPointerExceptionOwO</h3>
+                        <p style="color: var(--text-muted);">Технический администратор</p>
+                        <div class="social-links mt-3">
+                            <a href="#" class="text-white me-2"><i class="bi bi-github"></i></a>
+                            <a href="#" class="text-white me-2"><i class="bi bi-stack-overflow"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Горизонтальная временная шкала -->
+    <section id="timeline" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Наша история</h2>
+            <div class="horizontal-timeline">
+                <div class="timeline-item-horizontal" data-aos="fade-right">
+                    <h4>Основание</h4>
+                    <small style="color: var(--text-muted);">2024</small>
+                    <p>Старт нашего технологического пути</p>
+                </div>
+                <div class="timeline-item-horizontal" data-aos="fade-up">
+                    <h4>Первый релиз</h4>
+                    <small style="color: var(--text-muted);">2025</small>
+                    <p>Запуск основной платформы</p>
+                </div>
+                <div class="timeline-item-horizontal" data-aos="fade-left">
+                    <h4>Экспансия</h4>
+                    <small style="color: var(--text-muted);">2025</small>
+                    <p>Выход на международные рынки</p>
+                </div>
+                <div class="timeline-item-horizontal" data-aos="fade-right">
+                    <h4>Инновации</h4>
+                    <small style="color: var(--text-muted);">2025</small>
+                    <p>Внедрение AI-технологий</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="py-4 border-top border-secondary">
+        <div class="container text-center">
+            <p class="mb-0">© 2024 Mooncore. Все права защищены</p>
+        </div>
     </footer>
+
+    <!-- Скрипты -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Инициализация AOS
+        AOS.init({
+            once: true,
+            duration: 1000,
+            easing: 'ease-in-out'
+        });
+
+        // Параллакс эффект для 3D куба
+        document.addEventListener('mousemove', (e) => {
+            const cube = document.querySelector('.cube');
+            const x = (window.innerWidth/2 - e.pageX)/30;
+            const y = (window.innerHeight/2 - e.pageY)/30;
+            cube.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+        });
+    </script>
 </body>
 </html>
