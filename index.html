@@ -1,635 +1,145 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mooncore</title>
-    
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- AOS Animation -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <style>
-        :root {
-            --main-blue: #a0d1eb;
-            --dark-bg: #0a0a0a;
-            --text-muted: #adb5bd;
-        }
+    <link rel="stylesheet" href="css/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono&family=Space+Grotesk&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
 
-        body {
-            background-color: var(--dark-bg);
-            color: white;
-            overflow-x: hidden;
-        }
+    <title>MoonCore-inc</title>
 
-        /* 3D Background Effect */
-        .hero-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            perspective: 1000px;
-            overflow: hidden;
-        }
-
-        .cube {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform-style: preserve-3d;
-            animation: cubeRotate 20s infinite linear;
-        }
-
-        .cube-face {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            border: 2px solid var(--main-blue);
-            background: rgba(160, 209, 235, 0.1);
-            transform-style: preserve-3d;
-            animation: cubeGlow 2s infinite alternate;
-        }
-
-        /* Навигация */
-        .navbar {
-            background: rgba(10, 10, 10, 0.95) !important;
-            backdrop-filter: blur(10px);
-            transition: all 0.5s ease;
-        }
-
-        .navbar.scrolled {
-            background: rgba(10, 10, 10, 0.98) !important;
-            box-shadow: 0 5px 30px rgba(160, 209, 235, 0.1);
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            position: relative;
-            padding-bottom: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .logo:hover {
-            transform: skew(-5deg);
-        }
-
-        .logo::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40%;
-            height: 2px;
-            background: var(--main-blue);
-        }
-
-        .nav-link {
-            color: white !important;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--main-blue);
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        /* Герой секция */
-        .hero-section {
-            min-height: 100vh;
-            position: relative;
-        }
-
-        .hero-section h1 {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        /* Возможности */
-        .feature-card {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            transition: all 0.4s ease;
-            transform-style: preserve-3d;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
-        }
-
-        /* Команда */
-        .team-card {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s ease;
-        }
-
-        .team-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, var(--main-blue), transparent);
-            transform: rotate(45deg);
-            transition: 0.5s;
-            opacity: 0;
-        }
-
-        .team-card:hover::before {
-            opacity: 0.1;
-            top: -20%;
-            left: -20%;
-        }
-
-        .team-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(160, 209, 235, 0.1);
-        }
-
-        .team-icon {
-            transition: transform 0.3s ease;
-        }
-
-        /* Стили для временной шкалы */
-        .horizontal-timeline {
-            display: flex;
-            overflow-x: auto;
-            padding: 4rem 0;
-            scroll-snap-type: x mandatory;
-            gap: 8rem;
-            position: relative;
-        }
-
-        .horizontal-timeline::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, transparent 0%, var(--main-blue) 50%, transparent 100%);
-            transform: translateY(-50%);
-            z-index: 0;
-        }
-
-        .timeline-item-horizontal {
-            flex: 0 0 400px;
-            scroll-snap-align: center;
-            position: relative;
-            padding: 2rem;
-            background: #1a1a1a;
-            border: 2px solid var(--main-blue);
-            border-radius: 15px;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 30px rgba(160, 209, 235, 0.1);
-            transform-origin: center;
-            opacity: 0;
-            transform: translateY(50px);
-        }
-
-        .timeline-item-horizontal::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: -60px;
-            width: 25px;
-            height: 25px;
-            background: var(--dark-bg);
-            border: 3px solid var(--main-blue);
-            border-radius: 50%;
-            transform: translateY(-50%);
-            z-index: 1;
-        }
-
-        .timeline-item-horizontal::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            right: -60px;
-            width: 25px;
-            height: 25px;
-            background: var(--dark-bg);
-            border: 3px solid var(--main-blue);
-            border-radius: 50%;
-            transform: translateY(-50%);
-            z-index: 1;
-        }
-
-        .timeline-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .timeline-item-horizontal:hover {
-            transform: translateY(-20px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(160, 209, 235, 0.3);
-        }
-
-        /* Кастомный скроллбар */
-        .horizontal-timeline::-webkit-scrollbar {
-            height: 12px;
-        }
-
-        .horizontal-timeline::-webkit-scrollbar-thumb {
-            background: var(--main-blue);
-            border-radius: 10px;
-            box-shadow: inset 0 0 6px rgba(255,255,255,0.3);
-        }
-
-        .horizontal-timeline::-webkit-scrollbar-track {
-            background: rgba(160, 209, 235, 0.1);
-            border-radius: 10px;
-        }
-
-        /* Анимации */
-        @keyframes cubeRotate {
-            0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
-        }
-
-        @keyframes cubeGlow {
-            from { box-shadow: 0 0 10px rgba(160, 209, 235, 0.2); }
-            to { box-shadow: 0 0 30px rgba(160, 209, 235, 0.4); }
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Матричный фон */
-        .matrix-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            opacity: 0.05;
-            z-index: -1;
-        }
-
-        /* Социальные иконки */
-        .social-links a {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-
-        .social-links a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(160, 209, 235, 0.4),
-                transparent
-            );
-            transition: 0.5s;
-        }
-
-        .social-links a:hover::before {
-            left: 100%;
-        }
-        /* Анимация загрузки */
-        .preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--dark-bg);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.8s ease;
-        }
-
-        .moon-loader {
-            position: relative;
-            height: 120px;
-            width: 300px;
-        }
-
-        .moon {
-            width: 60px;
-            height: 60px;
-            background: var(--main-blue);
-            border-radius: 50%;
-            position: absolute;
-            left: 0;
-            animation: moonReveal 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-            box-shadow: 0 0 25px rgba(160, 209, 235, 0.4);
-        }
-
-        .logo-text {
-            position: absolute;
-            left: 80px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 2rem;
-            font-weight: 700;
-            opacity: 0;
-            animation: textReveal 0.8s ease-out 0.8s forwards;
-            color: var(--main-blue);
-            text-shadow: 0 0 15px rgba(160, 209, 235, 0.3);
-        }
-
-        @keyframes moonReveal {
-            0% {
-                transform: scale(0) rotate(-180deg);
-                opacity: 0;
-            }
-            70% {
-                transform: scale(1.1) rotate(15deg);
-            }
-            100% {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-            }
-        }
-
-        @keyframes textReveal {
-            0% {
-                opacity: 0;
-                transform: translate(-50px, -50%);
-            }
-            100% {
-                opacity: 1;
-                transform: translate(0, -50%);
-            }
-        }
-
-        /* Адаптация для мобильных */
-        @media (max-width: 768px) {
-            .moon {
-                width: 40px;
-                height: 40px;
-            }
-            .logo-text {
-                font-size: 1.5rem;
-                left: 60px;
-            }
-            .moon-loader {
-                width: 200px;
-                height: 60px;
-            }
-        }
-
-    </style>
 </head>
 <body>
-    <!-- Preloader -->
-    <div class="preloader">
-        <div class="moon-loader">
-            <div class="moon"></div>
-            <div class="logo-text">MOONCORE</div>
-        </div>
-    </div>
-
-    <!-- Навигация -->
-    <nav class="navbar navbar-expand-lg fixed-top py-3">
-        <div class="container">
-            <a class="navbar-brand logo text-white" href="#">MOONCORE</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon text-white"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#features">Возможности</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">Команда</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#timeline">История</a>
-                    </li>
-                </ul>
-            </div>
+    <nav class="navbar navbar-expand-lg fixed-top cyber-nav">
+        <div class="container-fluid">
+            <a class="navbar-brand nav-logo" href="#">MoonCore-inc</a>
         </div>
     </nav>
 
-    <!-- Герой секция -->
-    <section class="hero-section d-flex align-items-center">
-        <div class="hero-bg">
-            <div class="cube">
-                <div class="cube-face" style="transform: rotateY(0deg) translateZ(100px)"></div>
-                <div class="cube-face" style="transform: rotateY(90deg) translateZ(100px)"></div>
-                <div class="cube-face" style="transform: rotateY(180deg) translateZ(100px)"></div>
-                <div class="cube-face" style="transform: rotateY(270deg) translateZ(100px)"></div>
-                <div class="cube-face" style="transform: rotateX(90deg) translateZ(100px)"></div>
-                <div class="cube-face" style="transform: rotateX(-90deg) translateZ(100px)"></div>
+    <section class="hero-section">
+        <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+            <div class="row align-items-center g-lg-5 py-5">
+                <div class="col-lg-6 text-left text-lg-start">
+                    <h1 class="display-6 fw-bold lh-4 mb-2" id="heroTitle">MoonCore-<span class="changing-word">inc</span></h1>
+                    <p class="col-lg-10 fs-5">Нет веселья лучше, ЧЕМ СТРАДАНИЯ</p>
+                </div>
             </div>
-        </div>
-        <div class="container text-center position-relative" data-aos="zoom-in">
-            <h1 class="display-1 fw-bold mb-4 neon-text">Mooncore</h1>
-            <p class="lead">Мы вроде крутые да</p>
         </div>
     </section>
 
-    <!-- Возможности -->
-    <section id="features" class="py-5">
+    <section class="about-section py-5">
         <div class="container">
-            <h2 class="text-center mb-5" data-aos="fade-up">Наши возможности</h2>
-            <div class="row g-4">
-                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-                    <div class="feature-card rounded-3 p-4 text-center">
-                        <i class="bi bi-cpu fs-1 mb-3" style="color: var(--main-blue);"></i>
-                        <h3>Инновации</h3>
-                        <p style="color: var(--text-muted);">Передовые технологии( чайник и картошка )</p>
+            <h2 class="neon-cyan mb-5">// СОСТАВ</h2>
+            
+            <div class="row g-5 cyber-profiles">
+                <!-- NullPointerExceptionOwO -->
+                <div class="col-md-4">
+                    <div class="terminal-profile h-100">
+                        <div class="terminal-header">
+                            <span class="blink">█</span> root@NullPointerExceptionOwO:~# whoami
+                        </div>
+                        <pre class="terminal-body mb-0">
+    [REDACTED]@&#^! SYSTEMS
+    KERNEL PANIC (^_^)
+                        </pre>
+                        <div class="neon-cyan mt-2">&#47;&#47; СИСТЕМНЫЙ-ДЕМОН</div>
                     </div>
                 </div>
-                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="feature-card rounded-3 p-4 text-center">
-                        <i class="bi bi-shield-check fs-1 mb-3" style="color: var(--main-blue);"></i>
-                        <h3>Безопасность</h3>
-                        <p style="color: var(--text-muted);">Надежная защита ваших данных ( Пароль: 1234567890 )</p>
+    
+                <!-- Fazzyt -->
+                <div class="col-md-4">
+                    <div class="bsod-profile h-100">
+                        <div class="bsod-header">:-(</div>
+                        <div class="bsod-body">
+                            fazzyt stack overflow
+                            PLEASE_WAIT_WHILE_WE_CRASH...
+                        </div>
+                        <div class="neon-cyan mt-2">&#47;&#47; КРАШ-МАСТЕР</div>
                     </div>
                 </div>
-                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-                    <div class="feature-card rounded-3 p-4 text-center">
-                        <i class="bi bi-palette fs-1 mb-3" style="color: var(--main-blue);"></i>
-                        <h3>Дизайн</h3>
-                        <p style="color: var(--text-muted);">Современный и интуитивный интерфейс ( нет )</p>
+    
+                <!-- Vednees -->
+                <div class="col-md-4">
+                    <div class="blueprint-profile h-100">
+                        <div class="blood-stain" style="top:20px;left:60%"></div>
+                        <div class="blood-stain" style="top:70%;left:30%"></div>
+                        <div class="blueprint-content">
+                            <div class="circuit-board">
+                                <div class="wire"></div>
+                                <div class="chip"></div>
+                                <div class="spark"></div>
+                            </div>
+                            <div class="blood-text mt-3">[PROTOTYPE_42] Vednees</div>
+                            <div class="neon-cyan">&#47;&#47; ХУДОЖНИК БЕЗДНЫ</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Команда -->
-    <section id="about" class="py-5">
+    <section class="projects-section py-5">
         <div class="container">
-            <h2 class="text-center mb-5" data-aos="fade-up">Наша команда</h2>
-            <div class="row g-4">
-                <div class="col-md-6" data-aos="flip-left">
-                    <div class="team-card rounded-3 p-4 text-center">
-                        <div class="position-relative">
-                            <i class="bi bi-stars team-icon fs-1 mb-3" style="color: var(--main-blue);"></i>
-                        </div>
-                        <h3>fazzyt</h3>
-                        <p style="color: var(--text-muted);">Разработчик & Идейный вдохновитель</p>
-                        <div class="social-links mt-3">
-                            <a href="#" class="text-white me-2"><i class="bi bi-github"></i></a>
-                            <a href="#" class="text-white me-2"><i class="bi bi-linkedin"></i></a>
-                        </div>
+            <h2 class="neon-red mb-4">// active_projects</h2>
+            
+            <div class="grid-hack">
+                <!-- Проект 1 -->
+                <div class="project-card glitch-card">
+                    <div class="project-header">
+                        <span class="project-icon"><i class="bi bi-people-fill"></i></span>
+                        <h3>Fanbase</h3>
+                        <div class="status-dot running"></div>
                     </div>
+                    <p class="project-description">
+                        Веб-сайт, предназначенный для сбора и каталогизации цитат
+                    </p>
+                    <div class="code-grid"></div>
                 </div>
-                <div class="col-md-6" data-aos="flip-right">
-                    <div class="team-card rounded-3 p-4 text-center">
-                        <div class="position-relative">
-                            <i class="bi bi-gear team-icon fs-1 mb-3" style="color: var(--main-blue);"></i>
-                        </div>
-                        <h3>NullPointerExceptionOwO</h3>
-                        <p style="color: var(--text-muted);">Технический администратор</p>
-                        <div class="social-links mt-3">
-                            <a href="#" class="text-white me-2"><i class="bi bi-github"></i></a>
-                            <a href="#" class="text-white me-2"><i class="bi bi-stack-overflow"></i></a>
-                        </div>
+    
+                <!-- Проект 2 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-icon"><i class="bi bi-chat-left-fill"></i></span>
+                        <h3>MoonCore chat</h3>
+                        <div class="status-dot critical"></div>
                     </div>
+                    <p class="project-description">
+                        просто чатик
+                    </p>
+                    <div class="binary-flow">01001011&#8203;00101101</div>
+                </div>
+    
+                <!-- Проект 3 -->
+                <div class="project-card glitch-card">
+                    <div class="project-header">
+                        <span class="project-icon"><i class="bi bi-arrow-repeat"></i></span>
+                        <h3>...</h3>
+                        <div class="status-dot warning"></div>
+                    </div>
+                    <p class="project-description">
+                        ...
+                    </p>
+                    <div class="hack-lines"></div>
+                    <div class="code-grid"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Горизонтальная временная шкала -->
-    <section id="timeline" class="py-5">
+    <footer class="cyber-footer">
         <div class="container">
-            <h2 class="text-center mb-5" data-aos="fade-up">Наша история</h2>
-            <div class="horizontal-timeline">
-                <div class="timeline-item-horizontal" data-aos="fade-right">
-                    <h4>Основание</h4>
-                    <small style="color: var(--text-muted);">2024</small>
-                    <p>Старт нашего пути</p>
-                </div>
-                <div class="timeline-item-horizontal" data-aos="fade-up">
-                    <h4>Первый релиз</h4>
-                    <small style="color: var(--text-muted);">2025</small>
-                    <p>Запуск основной платформы ( ну я написал сайтик ;p )</p>
-                </div>
-                <div class="timeline-item-horizontal" data-aos="fade-left">
-                    <h4>Экспансия</h4>
-                    <small style="color: var(--text-muted);">2025</small>
-                    <p>Выход на международные рынки ( в МФЦ на практику )</p>
-                </div>
-                <div class="timeline-item-horizontal" data-aos="fade-right">
-                    <h4>Инновации</h4>
-                    <small style="color: var(--text-muted);">2025</small>
-                    <p>Внедрение AI-технологий ( Когда лень пинаем chat-gpt )</p>
-                </div>
+            <div class="glitch-text">
+                ВСЕ ПРАВА НЕ ЗАЩИЩЕНЫ. ХА-ХА.
             </div>
-        </div>
-    </section>
-
-    <!-- Футер -->
-    <footer class="py-4 border-top border-secondary">
-        <div class="container text-center">
-            <p class="mb-0">© 2024 Mooncore. Все права защищены</p>
         </div>
     </footer>
 
-    <!-- Скрипты -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <div class="matrix-bg"></div>
-    <script>
-        // Инициализация AOS
-        AOS.init({
-            once: true,
-            duration: 1000,
-            easing: 'ease-in-out'
-        });
-
-        // Параллакс для куба
-        document.addEventListener('mousemove', (e) => {
-            const cube = document.querySelector('.cube');
-            const x = (window.innerWidth/2 - e.pageX)/30;
-            const y = (window.innerHeight/2 - e.pageY)/30;
-            cube.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
-        });
-
-        // Инициализация прелоадера
-        window.addEventListener('load', () => {
-            const preloader = document.querySelector('.preloader');
-            setTimeout(() => {
-                preloader.style.opacity = '0';
-                setTimeout(() => {
-                    preloader.remove();
-                }, 800);
-            }, 2000); // Общее время анимации 2 секунды
-        });
-
-        // Матричный эффект
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        document.querySelector('.matrix-bg').appendChild(canvas);
-
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resize();
-        window.addEventListener('resize', resize);
-
-        const chars = '01';
-        const fontSize = 14;
-        const columns = canvas.width/fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
-
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.fillStyle = '#a0d1eb';
-            ctx.font = `${fontSize}px monospace`;
-
-            drops.forEach((drop, i) => {
-                const char = chars[Math.floor(Math.random() * chars.length)];
-                ctx.fillText(char, i*fontSize, drop*fontSize);
-                
-                if(drop*fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
-            });
-        }
-
-        setInterval(drawMatrix, 50);
-
-        // Эффект скролла для навигации
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            navbar.classList.toggle('scrolled', window.scrollY > 50);
-        });
-    </script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/evil-word.js"></script>
+    <script src="js/main.js"></script>
+    
 </body>
 </html>
-    
