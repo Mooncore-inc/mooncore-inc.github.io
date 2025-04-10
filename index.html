@@ -34,48 +34,25 @@
         <div class="container">
             <h2 class="neon-cyan mb-5">// СОСТАВ</h2>
             
-            <div class="row g-5 cyber-profiles">
-                <!-- NullPointerExceptionOwO -->
-                <div class="col-md-4">
-                    <div class="terminal-profile h-100">
-                        <div class="terminal-header">
-                            <span class="blink">█</span> root@NullPointerExceptionOwO:~# whoami
-                        </div>
-                        <pre class="terminal-body mb-0">
-    [REDACTED]@&#^! SYSTEMS
-    KERNEL PANIC (^_^)
-                        </pre>
-                        <div class="neon-cyan mt-2">&#47;&#47; СИСТЕМНЫЙ-ДЕМОН</div>
-                    </div>
+            <!-- Кнопки выбора -->
+            <div class="row mb-4 cyber-buttons">
+                <div class="col-md-4 mb-3">
+                    <button class="cyber-btn active" data-member="fazzyt"><i class="bi bi-code-slash"></i> Fazzyt</button>
                 </div>
-    
-                <!-- Fazzyt -->
-                <div class="col-md-4">
-                    <div class="bsod-profile h-100">
-                        <div class="bsod-header">:-(</div>
-                        <div class="bsod-body">
-                            fazzyt stack overflow
-                            PLEASE_WAIT_WHILE_WE_CRASH...
-                        </div>
-                        <div class="neon-cyan mt-2">&#47;&#47; КРАШ-МАСТЕР</div>
-                    </div>
+                <div class="col-md-4 mb-3">
+                    <button class="cyber-btn" data-member="nullpointer"><i class="bi bi-cpu-fill"></i> NullPointerExceptionOwO</button>
                 </div>
-    
-                <!-- Vednees -->
                 <div class="col-md-4">
-                    <div class="blueprint-profile h-100">
-                        <div class="blood-stain" style="top:20px;left:60%"></div>
-                        <div class="blood-stain" style="top:70%;left:30%"></div>
-                        <div class="blueprint-content">
-                            <div class="circuit-board">
-                                <div class="wire"></div>
-                                <div class="chip"></div>
-                                <div class="spark"></div>
-                            </div>
-                            <div class="blood-text mt-3">[PROTOTYPE_42] Vednees</div>
-                            <div class="neon-cyan">&#47;&#47; ХУДОЖНИК БЕЗДНЫ</div>
-                        </div>
-                    </div>
+                    <button class="cyber-btn" data-member="vednees"><i class="bi bi-brush-fill"></i> Vednees</button>
+                </div>
+            </div>
+    
+            <!-- Динамическая карточка -->
+            <div class="hologram-card">
+                <div class="hologram-effect"></div>
+                <div class="hologram-content">
+                    <div class="scanline"></div>
+                    <div id="member-info" class="p-3"></div>
                 </div>
             </div>
         </div>
@@ -110,6 +87,7 @@
                         просто чатик
                     </p>
                     <div class="binary-flow">01001011&#8203;00101101</div>
+                    <div class="code-grid"></div>
                 </div>
     
                 <!-- Проект 3 -->
@@ -139,6 +117,7 @@
 
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/evil-word.js"></script>
+    <script src="js/team.js"></script>
     <script src="js/main.js"></script>
     
 </body>
