@@ -1,1 +1,3 @@
 changeWord();
+createStars();
+animate();
