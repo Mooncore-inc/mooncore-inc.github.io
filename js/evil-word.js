@@ -1,4 +1,4 @@
-const words = ['inc', 'evil'];
+const words = ['evil', 'inc'];
 let currentIndex = 0;
 const wordElement = document.querySelector('.changing-word');
 
@@ -17,4 +17,4 @@ function changeWord() {
     }, 1000);
     }
 
-setInterval(changeWord, 5000);
+setInterval(changeWord, 3500);
