@@ -13,7 +13,7 @@ document.querySelectorAll('.cyber-btn').forEach(btn => {
             case 'fazzyt':
                 content = `
                     <div class="member-header neon-cyan mb-3">
-                        <h3>FAZZYT</h3>
+                        <h3>fazzyt</h3>
                     </div>
         
                     <div class="project-info">

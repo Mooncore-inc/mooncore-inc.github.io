@@ -92,19 +92,23 @@ nav .nav-logo a:hover {
     text-shadow: 0 0 10px var(--neon-red);
 }
 
+/* main.css */
 .hologram-card {
     position: relative;
-    margin-top: 2rem;
-    background: linear-gradient(45deg, 
-        #0d0d0d 0%, 
-        #0d1a1a 30%, 
-        #1a0d1a 70%, 
-        #0d0d0d 100%);
+    background: rgba(13, 13, 13, 0.95);
     border: 1px solid var(--neon-cyan);
-    box-shadow: 0 0 30px var(--neon-cyan);
+    border-radius: 5px;
     overflow: hidden;
     transform-style: preserve-3d;
-    perspective: 1000px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 0 30px rgba(8, 247, 254, 0.2),
+                inset 0 0 15px rgba(8, 247, 254, 0.1);
+}
+
+.hologram-card:hover {
+    transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
+    box-shadow: 0 25px 40px rgba(8, 247, 254, 0.3),
+                inset 0 0 25px rgba(8, 247, 254, 0.2);
 }
 
 .hologram-effect {
@@ -113,41 +117,89 @@ nav .nav-logo a:hover {
     height: 200%;
     background: linear-gradient(
         45deg,
-        var(--neon-cyan) 0%,
-        transparent 50%,
-        var(--neon-red) 100%
+        transparent 45%,
+        var(--neon-cyan) 50%,
+        transparent 55%
     );
     opacity: 0.1;
+}
+
+.scanline {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(
+        to right,
+        transparent 0%,
+        var(--neon-cyan) 50%,
+        transparent 100%
+    );
+    animation: scan 4s linear infinite;
+    opacity: 0.3;
+}
+
+@keyframes scan {
+    0% { top: -10%; }
+    100% { top: 110%; }
 }
 
 .hologram-content {
     position: relative;
     z-index: 2;
-    background: rgba(0, 0, 0, 0.85);
-    height: 100%;
-}
-
-.attributes p {
-    margin: 0.8rem 0;
-    font-size: 0.9em;
-    letter-spacing: 1px;
+    padding: 2rem;
+    background: 
+        repeating-linear-gradient(
+            0deg,
+            rgba(8, 247, 254, 0.05) 0px,
+            rgba(8, 247, 254, 0.05) 1px,
+            transparent 1px,
+            transparent 3px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            rgba(8, 247, 254, 0.05) 0px,
+            rgba(8, 247, 254, 0.05) 1px,
+            transparent 1px,
+            transparent 3px
+        );
 }
 
 .member-header {
-    border-bottom: 1px solid var(--neon-cyan);
-    padding-bottom: 1rem;
+    border-left: 3px solid var(--neon-red);
+    padding-left: 1rem;
+    margin-bottom: 2rem;
     position: relative;
 }
 
 .member-header h3 {
-    font-family: 'Space Mono', monospace;
-    text-transform: uppercase;
-    margin: 0;
+    font-size: 2rem;
+    letter-spacing: -1px;
+    text-shadow: 0 0 15px var(--neon-cyan);
 }
 
 .project-info p {
-    margin: 0.5rem 0;
-    font-size: 0.9em;
+    background: linear-gradient(
+        to right,
+        var(--neon-cyan) 0%,
+        var(--neon-red) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding: 0.3rem 0;
+}
+
+.attributes p {
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.attributes p::before {
+    content: '▶';
+    position: absolute;
+    left: 0;
+    color: var(--neon-red);
+    text-shadow: 0 0 10px var(--neon-red);
 }
 
 .neon-red span, .neon-cyan span {
@@ -407,4 +459,135 @@ nav .nav-logo a:hover {
     pointer-events: none;
     z-index: 999;
     mix-blend-mode: overlay;
+}
+
+
+/* Анимация загрузки */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 1s;
+}
+
+.preloader.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.moon-loader {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+
+.moon {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #0d0d0d 30%, #2a2a2a 100%);
+    box-shadow: 
+        0 0 60px rgba(8, 247, 254, 0.4),
+        inset 0 0 20px rgba(8, 247, 254, 0.2);
+    animation: 
+        moon-pulse 2s ease-in-out infinite,
+        moon-rotate 8s linear infinite;
+}
+
+@keyframes moon-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes moon-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.core-text {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0;
+    color: var(--neon-red);
+    text-shadow: 0 0 30px var(--neon-red);
+    animation: 
+        text-emerge 3s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+        text-glitch 2s infinite 3s;
+}
+
+@keyframes text-emerge {
+    0% {
+        font-size: 0;
+        letter-spacing: -20px;
+    }
+    70% {
+        font-size: 0;
+        letter-spacing: -20px;
+    }
+    100% {
+        font-size: 2.5rem;
+        letter-spacing: -2px;
+    }
+}
+
+@keyframes text-glitch {
+    0% { transform: translate(-50%, -50%); }
+    20% { transform: translate(-51%, -51%); }
+    40% { transform: translate(-49%, -49%); }
+    60% { transform: translate(-50%, -50%); }
+    80% { transform: translate(-50.5%, -49.5%); }
+}
+
+.particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: particles-rotate 15s linear infinite;
+}
+
+.particles::before,
+.particles::after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: var(--neon-cyan);
+    border-radius: 50%;
+    filter: blur(2px);
+}
+
+.particles::before {
+    top: 20%;
+    left: 10%;
+    animation: particle-float 3s ease-in-out infinite;
+}
+
+.particles::after {
+    bottom: 20%;
+    right: 10%;
+    animation: particle-float 4s ease-in-out infinite;
+}
+
+@keyframes particles-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes particle-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
 }
