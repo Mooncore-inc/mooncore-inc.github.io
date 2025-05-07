@@ -39,7 +39,7 @@ document.querySelectorAll('.cyber-btn').forEach(btn => {
                     </div>
 
                     <div class="attributes mt-4">
-                        <p>ПОЛ: <span class="neon-cyan">gnu linux</span></p>
+                        <p>ПОЛ: <span class="neon-cyan">BSD</span></p>
                         <p>ХОББИ: <span class="neon-cyan">мучать ИИ</span></p>
                     </div>
                 `;
