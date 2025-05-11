@@ -34,13 +34,13 @@ document.querySelectorAll('.cyber-btn').forEach(btn => {
                     </div>
         
                     <div class="project-info">
-                        <p>РОЛЬ: <span class="neon-red">Перичуркобес</span></p>
+                        <p>РОЛЬ: <span class="neon-red">перичуркобес</span></p>
                         <p>ДОЛЖНОСТЬ: <span class="neon-red">кодер, тех-админ</span></p>
                     </div>
 
                     <div class="attributes mt-4">
                         <p>ПОЛ: <span class="neon-cyan">BSD</span></p>
-                        <p>ХОББИ: <span class="neon-cyan">мучать ИИ</span></p>
+                        <p>ХОББИ: <span class="neon-cyan">Мучать ИИ</span></p>
                     </div>
                 `;
                 break;
@@ -57,7 +57,25 @@ document.querySelectorAll('.cyber-btn').forEach(btn => {
 
                     <div class="attributes mt-4">
                         <p>ПОЛ: <span class="neon-cyan">Мужской</span></p>
-                        <p>ХОББИ: <span class="neon-cyan">кучеряво базарить</span></p>
+                        <p>ХОББИ: <span class="neon-cyan">Кучеряво базарить</span></p>
+                    </div>
+                `;
+                break;
+            
+            case 'terrorlxvely':
+                    content = `
+                    <div class="member-header neon-cyan mb-3">
+                        <h3>terrorlxvely</h3>
+                    </div>
+            
+                    <div class="project-info">
+                        <p>РОЛЬ: <span class="neon-red">контроль качества</span></p>
+                        <p>ДОЛЖНОСТЬ: <span class="neon-red">админ</span></p>
+                    </div>
+    
+                    <div class="attributes mt-4">
+                        <p>ПОЛ: <span class="neon-cyan">Мужской</span></p>
+                        <p>ХОББИ: <span class="neon-cyan">Хлопать жопой</span></p>
                     </div>
                 `;
                 break;
