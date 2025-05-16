@@ -79,6 +79,24 @@ document.querySelectorAll('.cyber-btn').forEach(btn => {
                     </div>
                 `;
                 break;
+            
+            case 'WWF':
+                    content = `
+                    <div class="member-header neon-cyan mb-3">
+                        <h3>WWF</h3>
+                    </div>
+            
+                    <div class="project-info">
+                        <p>РОЛЬ: <span class="neon-red">главный по идеям</span></p>
+                        <p>ДОЛЖНОСТЬ: <span class="neon-red">управление аудиторией, пиар</span></p>
+                    </div>
+    
+                    <div class="attributes mt-4">
+                        <p>ПОЛ: <span class="neon-cyan">Пингвин</span></p>
+                        <p>ХОББИ: <span class="neon-cyan">Пинать хуи</span></p>
+                    </div>
+                `;
+                break;
         }
         
         infoContainer.innerHTML = content;
