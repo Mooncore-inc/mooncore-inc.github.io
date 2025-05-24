@@ -7,7 +7,7 @@ window.addEventListener('load', () => {
         setTimeout(() => {
             preloader.remove();
         }, 1000);
-    }, 3500);
+    }, 1500);
 });
 
 
