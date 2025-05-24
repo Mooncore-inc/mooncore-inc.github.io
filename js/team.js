@@ -97,6 +97,24 @@ document.querySelectorAll('.cyber-btn').forEach(btn => {
                     </div>
                 `;
                 break;
+            
+            case 'mloob':
+                    content = `
+                    <div class="member-header neon-cyan mb-3">
+                        <h3>mloob</h3>
+                    </div>
+            
+                    <div class="project-info">
+                        <p>РОЛЬ: <span class="neon-red">глава cлужбы безопасности</span></p>
+                        <p>ДОЛЖНОСТЬ: <span class="neon-red">эксперт в сфере СИ и ИБ</span></p>
+                    </div>
+    
+                    <div class="attributes mt-4">
+                        <p>ПОЛ: <span class="neon-cyan">Мужской</span></p>
+                        <p>ХОББИ: <span class="neon-cyan">Разводить межрасовые войны</span></p>
+                    </div>
+                `;
+                break;
         }
         
         infoContainer.innerHTML = content;
