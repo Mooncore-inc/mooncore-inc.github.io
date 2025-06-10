@@ -115,7 +115,25 @@ document.querySelectorAll('.cyber-btn').forEach(btn => {
                     </div>
                 `;
                 break;
-        }
+            
+                case 'Kinder':
+                    content = `
+                    <div class="member-header neon-cyan mb-3">
+                        <h3>Kinder</h3>
+                    </div>
+            
+                    <div class="project-info">
+                        <p>РОЛЬ: <span class="neon-red">свагист</span></p>
+                        <p>ДОЛЖНОСТЬ: <span class="neon-red">писатель, осинтер</span></p>
+                    </div>
+    
+                    <div class="attributes mt-4">
+                        <p>ПОЛ: <span class="neon-cyan">Мужчина</span></p>
+                        <p>ХОББИ: <span class="neon-cyan">Дрончики</span></p>
+                    </div>
+                `;
+                break;
+            }
         
         infoContainer.innerHTML = content;
     });
